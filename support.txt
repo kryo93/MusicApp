@@ -1,0 +1,9 @@
+List all top albums
+http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=cher&api_key=200c24d888fc59ed3d619de2b9e2cfc3&format=json
+
+List all top tracks
+http://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=cher&api_key=200c24d888fc59ed3d619de2b9e2cfc3&format=json
+
+Search an artist
+http://ws.audioscrobbler.com/2.0/?method=artist.search&artist=khalid&api_key=200c24d888fc59ed3d619de2b9e2cfc3&format=json
+

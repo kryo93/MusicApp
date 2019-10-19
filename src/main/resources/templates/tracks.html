@@ -1,0 +1,50 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+
+<body>
+<!--Use this table when accessing the top tracks-->
+<table th:if="${artist} == null">
+    <thead>
+    <tr>
+        <th>Artist</th>
+        <th>Track</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="track : ${top_tracks}">
+        <td><span th:text="${track.artistName}">Artist Name</span></td>
+        <td><span th:text="${track.trackName}">Track Name</span></td>
+    </tr>
+    </tbody>
+</table>
+
+<table th:if="${artist} != null">
+    <thead>
+    <h3 th:text="'Hits of ' + ${artist}"></h3>
+    <tr>
+        <th>Track</th>
+        <th>Play Count</th>
+        <th>Listeners</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${top_tracks.empty}">
+        <td><span th:text="'empty...'">empty...</span></td>
+        <td><span th:text="'empty...'">empty...</span></td>
+        <td><span th:text="'empty...'">empty...</span></td>
+    </tr>
+    <tr th:if="${top_tracks.empty}">
+        <td colspan="3" th:text="'No Music Found for ' + ${artist}"></td>
+    </tr>
+    <tr th:each="track : ${top_tracks}">
+        <td><span th:text="${track.trackName}">Track Name</span></td>
+        <td><span th:text="${track.playCount}">PlayCount</span></td>
+        <td><span th:text="${track.listeners}">Listeners</span></td>
+    </tr>
+    </tbody>
+</table>
+<!--Use this table when accessing the top tracks of an artist-->
+</body>
+</html>
