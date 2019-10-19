@@ -1,0 +1,22 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Available Playlists</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="playlist : ${playlists}">
+        <td>
+            <a th:href="@{/playlist(list=${playlist})}" th:text="${playlist}"></a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

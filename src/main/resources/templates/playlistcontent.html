@@ -1,0 +1,27 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+
+<body>
+<h5 th:if="${tracks.empty}" th:text="'Poof! It\'s empty'"></h5>
+<table th:if="${not tracks.empty}">
+    <thead>
+    <tr>
+        <th>Artist</th>
+        <th>Music</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="track : ${tracks}">
+        <td th:text="${track.artistName}"></td>
+        <td th:text="${track.trackName}"></td>
+        <td>
+            <a th:href="@{/playlist/delete(id=${track.id}, list=${list})}">remove</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

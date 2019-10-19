@@ -10,12 +10,14 @@
     <tr>
         <th>Artist</th>
         <th>Track</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="track : ${top_tracks}">
         <td><span th:text="${track.artistName}">Artist Name</span></td>
         <td><span th:text="${track.trackName}">Track Name</span></td>
+        <td><a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, playlist=${track.playlist})}">Save</a></td>
     </tr>
     </tbody>
 </table>
@@ -27,6 +29,7 @@
         <th>Track</th>
         <th>Play Count</th>
         <th>Listeners</th>
+        <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -34,14 +37,16 @@
         <td><span th:text="'empty...'">empty...</span></td>
         <td><span th:text="'empty...'">empty...</span></td>
         <td><span th:text="'empty...'">empty...</span></td>
+        <td><a th:href="@{/}" th:text="nothing to do...">nothing to do...</a> </td>
     </tr>
     <tr th:if="${top_tracks.empty}">
-        <td colspan="3" th:text="'No Music Found for ' + ${artist}"></td>
+        <td colspan="4" th:text="'No Music Found for ' + ${artist}"></td>
     </tr>
     <tr th:each="track : ${top_tracks}">
         <td><span th:text="${track.trackName}">Track Name</span></td>
         <td><span th:text="${track.playCount}">PlayCount</span></td>
         <td><span th:text="${track.listeners}">Listeners</span></td>
+        <td><a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, playlist=${track.playlist})}">Save</a></td>
     </tr>
     </tbody>
 </table>
