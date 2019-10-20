@@ -108,6 +108,10 @@ boot will by default will render the "index" page*/
     @GetMapping("/playlist/deleteplaylist")
     public String deletePlaylist(@RequestParam("list") String playlistName){
         offlinePlaylistService.deletePlaylist(playlistName);
+        offlineTrackService.deleteTrackofPlaylist(playlistName);
+        /*If only I had many to many relationship between playlist and tracks, then the second call
+        * wouldn't have to be made. And I wouldn't have to populate my database with duplicate tracks
+        * in which belongs to different playlist. If Only! Goddamn it! I must do it!!!!!!*/
         return "redirect:/playlist";
     }
 

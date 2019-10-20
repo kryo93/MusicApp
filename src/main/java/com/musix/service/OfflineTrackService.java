@@ -40,4 +40,8 @@ public class OfflineTrackService {
     public List<Track> getAllTracksFromPlaylist(String playlist) {
         return offlineTrackRespository.getAllTrackFromPlaylist(playlist);
     }
+
+    public void deleteTrackofPlaylist(String playlist) {
+        offlineTrackRespository.deleteAllTrackFromPlaylist(playlist);
+    }
 }
