@@ -22,9 +22,9 @@ public class OfflinePlaylistService {
         return playlist;
     }
 
-    public Optional<Playlist> deletePlaylist(int id) {
-        Optional<Playlist> playlist = offlinePlaylistRepository.findById(id);
-        offlinePlaylistRepository.deleteById(id);
+    public Optional<Playlist> deletePlaylist(String playlist_name) {
+        Optional<Playlist> playlist = offlinePlaylistRepository.findOfName(playlist_name);
+        offlinePlaylistRepository.deleteOfName(playlist_name);
         return playlist;
     }
 

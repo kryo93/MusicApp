@@ -105,9 +105,9 @@ boot will by default will render the "index" page*/
         return "redirect:/playlist";
     }
 
-    @GetMapping("/playlist/delete")
-    public String deletePlaylist(@RequestParam("list_id") int listId){
-        offlinePlaylistService.deletePlaylist(listId);
+    @GetMapping("/playlist/deleteplaylist")
+    public String deletePlaylist(@RequestParam("list") String playlistName){
+        offlinePlaylistService.deletePlaylist(playlistName);
         return "redirect:/playlist";
     }
 

@@ -4,6 +4,8 @@
 </head>
 
 <body>
+<h3 th:text="${list}"></h3>
+<a th:href="@{/playlist/deleteplaylist(list=${list})}">delete</a>
 <h5 th:if="${tracks.empty}" th:text="'Poof! It\'s empty'"></h5>
 <table th:if="${not tracks.empty}">
     <thead>
@@ -26,6 +28,5 @@
     </tbody>
 </table>
 
-<a th:href=""
 </body>
 </html>
