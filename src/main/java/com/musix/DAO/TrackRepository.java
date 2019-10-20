@@ -76,7 +76,6 @@ public class TrackRepository {
         JSONObject result = new JSONObject(response);
         JSONObject search_results = result.getJSONObject("results");
         String totalResults = search_results.getString("opensearch:totalResults");
-        System.out.println(totalResults);
         List<Track> trackList = new ArrayList<>();
 
         if (Integer.parseInt(totalResults) == 0) {

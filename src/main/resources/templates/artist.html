@@ -1,52 +1,36 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <title>Musix - A Music app without music</title>
+    <script src="js/search.js"></script>
 </head>
 
 <body>
 <div style="display:inline">
-    <a href="/" style="text-decoration:none">Home</a>
-    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>
-    <a href="/topartists" style="text-decoration:none">Top Artists</a>
-    <form action="search" method="GET">
-        <input type="text" name="search_query" required>
-        <input type="submit" value="Search">
+    <a href="/" style="text-decoration:none">Home</a>|
+    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>|
+    <a href="/topartists" style="text-decoration:none">Top Artists</a>|
+    <a href="/playlist" style="text-decoration:none">Playlists</a>
+    <form action="#" id="searchForm" method="GET">
+        <input type="text" id="searchQuery" name="search_query" required>
         <input type="hidden" value="1" name="page_number">
+        <input type="button" value="Search Artist" onclick="searchArtist()">
+        <input type="button" value="Search Track" onclick="searchTrack()">
     </form>
     <hr>
 </div>
 
+<table>
+    <thead>
+    <tr>
+        <th>Artist Name</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="artist : ${top_artist}">
+        <td><a th:href="@{/toptracks(artist=${artist.artistName})}" th:text="${artist.artistName}">Artist Name</a></td>
+    </tr>
+    </tbody>
+</table>
 
-<div th:if="${search_tag == 'artist'}">
-    <table>
-        <thead>
-        <tr>
-            <th>Artist Name</th>
-            <th>Listeners</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${artist_search_result.empty}">
-            <td colspan="2">Artist Not Found</td>
-        </tr>
-        <tr th:each="artist : ${artist_search_result}">
-            <td><a th:href="@{/toptracks(artist=${artist.artistName})}" th:text="${artist.artistName}">Artist Name</a>
-            </td>
-            <td><span th:text="${artist.listeners}">Listeners</span></td>
-        </tr>
-        </tbody>
-    </table>
-    <div th:if="${not artist_search_result.empty}">
-        <a th:if="${current_page > 1}"
-           th:href="@{/search(search_query=${search_query}, page_number=${current_page} - 1)}">prev</a>
-        <p th:text="${current_page}" style="margin:0;padding:0;display:inline;"></p>
-        <a th:href="@{/search(search_query=${search_query}, page_number=${current_page} + 1)}">next</a>
-    </div>
-</div>
-
-<div th:if="${search_tag == 'track'}">
-
-
-</div>
 </body>
 </html>

@@ -1,26 +1,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <script>
-        function showForm() {
-          var x = document.getElementById("formDIV");
-          if (x.style.display === "none") {
-            x.style.display = "block";
-          } else {
-            x.style.display = "none";
-          }
-        }
-    </script>
+    <title>Musix - A music app without music</title>
+    <script src="js/search.js"></script>
+    <script src="js/formonclick.js"></script>
 </head>
 
 <body>
 <div style="display:inline">
-    <a href="/" style="text-decoration:none">Home</a>
-    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>
-    <a href="/topartists" style="text-decoration:none">Top Artists</a>
-    <form action="search" method="GET">
-        <input type="text" name="search_query" required>
-        <input type="submit" value="Search">
+    <a href="/" style="text-decoration:none">Home</a>|
+    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>|
+    <a href="/topartists" style="text-decoration:none">Top Artists</a>|
+    <a href="/playlist" style="text-decoration:none">Playlists</a>
+    <form action="#" id="searchForm" method="GET">
+        <input type="text" id="searchQuery" name="search_query" required>
         <input type="hidden" value="1" name="page_number">
+        <input type="button" value="Search Artist" onclick="searchArtist()">
+        <input type="button" value="Search Track" onclick="searchTrack()">
     </form>
     <hr>
 </div>

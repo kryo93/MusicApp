@@ -1,17 +1,20 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <title>Musix - A music app without music</title>
+    <script src="js/search.js"></script>
 </head>
 
 <body>
 <div style="display:inline">
-    <a href="/" style="text-decoration:none">Home</a>
-    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>
-    <a href="/topartists" style="text-decoration:none">Top Artists</a>
-    <form action="search" method="GET">
-        <input type="text" name="search_query" required>
-        <input type="submit" value="Search">
+    <a href="/" style="text-decoration:none">Home</a>|
+    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>|
+    <a href="/topartists" style="text-decoration:none">Top Artists</a>|
+    <a href="/playlist" style="text-decoration:none">Playlists</a>
+    <form action="#" id="searchForm" method="GET">
+        <input type="text" id="searchQuery" name="search_query" required>
         <input type="hidden" value="1" name="page_number">
+        <input type="button" value="Search Artist" onclick="searchArtist()">
+        <input type="button" value="Search Track" onclick="searchTrack()">
     </form>
     <hr>
 </div>
@@ -54,13 +57,16 @@
         </tr>
         </thead>
         <tbody>
+        <tr th:if="${track_search_result.empty}">
+            <td colspan="4">Track Not Found</td>
+        </tr>
         <tr th:each="track : ${track_search_result}">
             <td><span th:text="${track.artistName}">Artist Name</span></td>
             <td><span th:text="${track.trackName}">Track Name</span></td>
             <td><span th:text="${track.listeners}">Track Name</span></td>
-            <td th:each="playlist:${playlists}">
-                <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list_id=${playlist.playlist_id})}"
-                   th:text="${playlist.playlistName}">Save</a>
+            <td>
+                <a th:each="playlist:${playlists}" th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list_id=${playlist.playlist_id})}"
+                   th:text="${playlist.playlistName} + '|'" style="text-decoration:none">Save</a>
             </td>
         </tr>
         </tbody>

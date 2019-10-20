@@ -2,19 +2,8 @@
 <!--<html xmlns:th="http://www.thymeleaf.org">-->
 
 <head>
-    <title>Musix - Be Basic</title>
-    <script>
-        function searchArtist(){
-            form=document.getElementById("searchForm");
-            form.action="/searchArtist";
-            form.submit();
-        }
-        function searchTracks(){
-            form=document.getElementById("searchForm");
-            form.action="/searchTrack";
-            form.submit();
-        }
-    </script>
+    <title>Musix - A music app without music</title>
+    <script src="js/search.js"></script>
 </head>
 <body>
 <a href="/topartists">Top Artist</a><br>
@@ -24,20 +13,22 @@
     <input type="text" id="searchQuery" name="search_query">
     <input type="hidden" value="1" name="page_number">
     <input type="button" value="Search Artist" onclick="searchArtist()">
-    <input type="button" value="Search Tracks" onclick="searchTracks()">
+    <input type="button" value="Search Track" onclick="searchTrack()">
 </form>
 
 <h4>What Can You Do ?</h4>
+
 <ul>
     <li>See the Top Artists/Songs</li>
     <li>Search For Artists/Songs</li>
     <li>Manage Your Playlists(and later cry when you realize it was all in-memory)</li>
     <li>Add Any Song to Any of Your Playlist</li>
+    <li>Crud Around With Your Playlists</li>
 </ul>
 
-<h4>What You Can't Do ?</h4>
+<h4>What Can't You Do ?</h4>
 <ul>
-    <li>You can't listen to music</li>
+    <li>You can't listen to music :(</li>
 </ul>
 <p>Yeah, I guess you're better off with <a href="https://www.youtube.com" style="text-decoration:none">Youtube</a></p>
 
