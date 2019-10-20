@@ -3,6 +3,18 @@
 </head>
 
 <body>
+<div style="display:inline">
+    <a href="/" style="text-decoration:none">Home</a>
+    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>
+    <a href="/topartists" style="text-decoration:none">Top Artists</a>
+    <form action="search" method="GET">
+        <input type="text" name="search_query" required>
+        <input type="submit" value="Search">
+        <input type="hidden" value="1" name="page_number">
+    </form>
+    <hr>
+</div>
+
 <!--Use this table when accessing the top tracks-->
 <table th:if="${artist} == null">
     <thead>
@@ -38,7 +50,7 @@
         <th>Track</th>
         <th>Play Count</th>
         <th>Listeners</th>
-        <th>Action</th>
+        <th>Add To Playlist</th>
     </tr>
     </thead>
     <tbody>
@@ -46,7 +58,7 @@
         <td><span th:text="'empty...'">empty...</span></td>
         <td><span th:text="'empty...'">empty...</span></td>
         <td><span th:text="'empty...'">empty...</span></td>
-        <td><a th:href="@{/}" th:text="nothing to do...">nothing to do...</a></td>
+        <td><a th:href="@{/}" th:text="'nothing to do...'">nothing to do...</a></td>
     </tr>
     <tr th:if="${top_tracks.empty}">
         <td colspan="4" th:text="'No Music Found for ' + ${artist}"></td>
@@ -55,9 +67,10 @@
         <td><span th:text="${track.trackName}">Track Name</span></td>
         <td><span th:text="${track.playCount}">PlayCount</span></td>
         <td><span th:text="${track.listeners}">Listeners</span></td>
-        <td th:each="playlist:${playlists}" >
-            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list_id=${playlist.playlist_id})}"
-               th:text="${playlist.playlistName}">Save</a></td>
+        <td>
+            <a th:each="playlist:${playlists}" th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list_id=${playlist.playlist_id})}"
+               th:text="${playlist.playlistName} + '|'" style="text-decoration:none">Save</a>
+        </td>
     </tr>
     </tbody>
 </table>

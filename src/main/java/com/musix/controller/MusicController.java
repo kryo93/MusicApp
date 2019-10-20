@@ -39,13 +39,13 @@ public class MusicController {
 boot will by default will render the "index" page*/
     @GetMapping({"/", ""})
     public String showHomepage() {
-        System.out.println("Inside home controller");
         return "index";
     }
 
     @GetMapping("/search")
     public String search(@RequestParam("search_query") String searchQuery, @RequestParam("page_number") int pageNumber, Model model) throws IOException, JSONException {
         List<Artist> resultArtist = artistService.searchArtist(searchQuery, pageNumber, 10);
+
         model.addAttribute("search_query", searchQuery);
         model.addAttribute("current_page", pageNumber);
         model.addAttribute("artist_search_result", resultArtist);
@@ -68,7 +68,6 @@ boot will by default will render the "index" page*/
         if (artistName == null) {
             model.addAttribute("top_tracks", trackService.getTopTracks());
         } else {
-            System.out.println(artistName);
             model.addAttribute("top_tracks", artistService.getTopTracks(artistName));
         }
         return "tracks";
@@ -85,14 +84,12 @@ boot will by default will render the "index" page*/
     @GetMapping("/playlist")
     public String playlistContent(@RequestParam(value = "list", required = false) Integer list_id, Model model){
         if (list_id != null) {
-            System.out.println("When params");
             List<Track> tracks = offlineTrackService.getAllTracksFromPlaylist(list_id);
             model.addAttribute("tracks", tracks);
             model.addAttribute("list", list_id);
             model.addAttribute("update_playlist", offlinePlaylistService.getPlaylistById(list_id));
             return "playlistcontent";
         } else {
-            System.out.println("When not params");
             List<Playlist> playlists = offlinePlaylistService.getAllPlaylist();
             model.addAttribute("playlists", playlists);
             model.addAttribute("add_playlist", new Playlist());
@@ -127,7 +124,7 @@ boot will by default will render the "index" page*/
     @GetMapping("/playlist/deletetrack")
     public String deleteTrack(@RequestParam("track_id") int trackId, @RequestParam("list_id") Integer listId){
         offlineTrackService.deleteTrackOfPlaylist(trackId, listId);
-        return "redirect:/playlist?list=" + trackId;
+        return "redirect:/playlist?list=" + listId;
     }
 
 

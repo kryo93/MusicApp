@@ -37,7 +37,6 @@ public class OfflinePlaylistService {
     }
 
     public Optional<Playlist> getPlaylistById(Integer list_id) {
-        System.out.println("I'm looking for playlist by id");
         return offlinePlaylistRepository.findById(list_id);
     }
 

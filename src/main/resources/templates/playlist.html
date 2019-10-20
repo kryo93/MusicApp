@@ -13,6 +13,18 @@
 </head>
 
 <body>
+<div style="display:inline">
+    <a href="/" style="text-decoration:none">Home</a>
+    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>
+    <a href="/topartists" style="text-decoration:none">Top Artists</a>
+    <form action="search" method="GET">
+        <input type="text" name="search_query" required>
+        <input type="submit" value="Search">
+        <input type="hidden" value="1" name="page_number">
+    </form>
+    <hr>
+</div>
+
 <button onclick="showForm()">Add Playlist</button>
 <div id="formDIV" style="display:none;">
     <form action="#" th:action="@{/playlist/add}" th:object="${add_playlist}" method="post">

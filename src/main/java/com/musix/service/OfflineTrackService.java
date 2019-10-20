@@ -53,7 +53,7 @@ public class OfflineTrackService {
             String playlist_name = playlist.get().getPlaylistName();
             return offlineTrackRespository.getAllTrackFromPlaylist(playlist_name);
         }
-        System.out.println("I didn't find it");
+
         return null;
     }
 

@@ -4,6 +4,18 @@
 </head>
 
 <body>
+<div style="display:inline">
+    <a href="/" style="text-decoration:none">Home</a>
+    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>
+    <a href="/topartists" style="text-decoration:none">Top Artists</a>
+    <form action="search" method="GET">
+        <input type="text" name="search_query" required>
+        <input type="submit" value="Search">
+        <input type="hidden" value="1" name="page_number">
+    </form>
+    <hr>
+</div>
+
 <table th:if="${search_query} == 'all'">
     <thead>
     <tr>
@@ -30,13 +42,15 @@
             <td colspan="2">Artist Not Found</td>
         </tr>
         <tr th:each="artist : ${artist_search_result}">
-            <td><a th:href="@{/toptracks(artist=${artist.artistName})}" th:text="${artist.artistName}">Artist Name</a></td>
+            <td><a th:href="@{/toptracks(artist=${artist.artistName})}" th:text="${artist.artistName}">Artist Name</a>
+            </td>
             <td><span th:text="${artist.listeners}">Listeners</span></td>
         </tr>
         </tbody>
     </table>
     <div th:if="${not artist_search_result.empty}">
-        <a th:if="${current_page > 1}" th:href="@{/search(search_query=${search_query}, page_number=${current_page} - 1)}">prev</a>
+        <a th:if="${current_page > 1}"
+           th:href="@{/search(search_query=${search_query}, page_number=${current_page} - 1)}">prev</a>
         <p th:text="${current_page}" style="margin:0;padding:0;display:inline;"></p>
         <a th:href="@{/search(search_query=${search_query}, page_number=${current_page} + 1)}">next</a>
     </div>
