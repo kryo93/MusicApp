@@ -4,7 +4,13 @@
 </head>
 
 <body>
-<h3 th:text="${list}"></h3>
+
+<form action="#" th:action="@{/playlist/updateplaylist}" th:object="${update_playlist}" method="post">
+    <input type="hidden" th:field="*{playlist_id}"/>
+    <input type="text" th:field="*{playlistName}"/>
+    <input type="submit" value="Update">
+</form>
+
 <a th:href="@{/playlist/deleteplaylist(list=${list})}">delete</a>
 <h5 th:if="${tracks.empty}" th:text="'Poof! It\'s empty'"></h5>
 <table th:if="${not tracks.empty}">
@@ -14,7 +20,7 @@
         <th>Music</th>
         <th>Playlist</th>
         <th>Action</th>
-    </tr>
+    </tr>/
     </thead>
     <tbody>
     <tr th:each="track : ${tracks}">

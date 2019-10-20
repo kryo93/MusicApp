@@ -37,4 +37,11 @@ public class Playlist {
         this.playlist_id = playlist_id;
     }
 
+    @Override
+    public String toString() {
+        return "Playlist{" +
+                "playlist_id=" + playlist_id +
+                ", playlistName='" + playlistName + '\'' +
+                '}';
+    }
 }

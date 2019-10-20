@@ -89,7 +89,7 @@ boot will by default will render the "index" page*/
             List<Track> tracks = offlineTrackService.getAllTracksFromPlaylist(playlist);
             model.addAttribute("tracks", tracks);
             model.addAttribute("list", playlist);
-            return "playlistcontent";
+            model.addAttribute("update_playlist", offlinePlaylistService.getPlaylistByName(playlist));            return "playlistcontent";
         } else {
             System.out.println("When not params");
             List<Playlist> playlists = offlinePlaylistService.getAllPlaylist();
@@ -101,7 +101,7 @@ boot will by default will render the "index" page*/
 
     @PostMapping("/playlist/add")
     public String addPlaylist(@ModelAttribute("new_playlist") Playlist playlist){
-        offlinePlaylistService.addPlaylist(playlist);
+        offlinePlaylistService.savePlaylist(playlist);
         return "redirect:/playlist";
     }
 
@@ -115,6 +115,13 @@ boot will by default will render the "index" page*/
         return "redirect:/playlist";
     }
 
+    // can I send parameters from one function to another ?
+    @PostMapping("/playlist/updateplaylist")
+    public String updatePlaylist(@ModelAttribute("playlist") Playlist playlist){
+        offlinePlaylistService.savePlaylist(playlist);
+        return "redirect:/playlist?list=" ;
+    }
+
     @GetMapping("/playlist/delete")
     public String deleteTrack(@RequestParam("list") String playlist, @RequestParam("id") int trackId){
         offlineTrackService.deleteTrack(trackId);
@@ -123,3 +130,8 @@ boot will by default will render the "index" page*/
 
 
 }
+
+
+
+// LESSON LEARNED, NEVER PLAY AROUND WITH ENTITES THAT YOU MAKE VISIBLE TO THE END USER FOR CRUD OPERATIONS! IN THE BACKED;
+// need to refactor using id from playlist to ease navigation when updating the name of the playlist

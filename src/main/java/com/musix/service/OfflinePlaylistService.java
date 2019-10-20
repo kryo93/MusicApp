@@ -17,7 +17,7 @@ public class OfflinePlaylistService {
     public OfflinePlaylistService(OfflinePlaylistRepository offlinePlaylistRepository) {
         this.offlinePlaylistRepository = offlinePlaylistRepository;
     }
-    public Playlist addPlaylist(Playlist playlist) {
+    public Playlist savePlaylist(Playlist playlist) {
         offlinePlaylistRepository.save(playlist);
         return playlist;
     }
@@ -30,6 +30,10 @@ public class OfflinePlaylistService {
 
     public List<Playlist> getAllPlaylist() {
         return offlinePlaylistRepository.findAll();
+    }
+
+    public Object getPlaylistByName(String playlist) {
+        return offlinePlaylistRepository.findOfName(playlist);
     }
 
 //    public List<Track> getAllTracks(int playlist_id){
