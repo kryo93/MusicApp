@@ -1,16 +1,16 @@
 package com.musix.controller;
 
 import com.musix.entity.Artist;
+import com.musix.entity.Playlist;
 import com.musix.entity.Track;
-import com.musix.service.AlbumService;
-import com.musix.service.ArtistService;
-import com.musix.service.OfflineService;
-import com.musix.service.TrackService;
+import com.musix.service.*;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -23,15 +23,16 @@ public class MusicController {
     private AlbumService albumService;
     private TrackService trackService;
     private ArtistService artistService;
-    private OfflineService offlineService;
-//    AlbumService albumService;
+    private OfflineTrackService offlineTrackService;
+    private OfflinePlaylistService offlinePlaylistService;
 
     @Autowired
-    public MusicController(TrackService trackService, AlbumService albumService, ArtistService artistService, OfflineService offlineService) {
+    public MusicController(TrackService trackService, AlbumService albumService, ArtistService artistService, OfflineTrackService offlineTrackService, OfflinePlaylistService offlinePlaylistService) {
         this.trackService = trackService;
         this.albumService = albumService;
         this.artistService = artistService;
-        this.offlineService = offlineService;
+        this.offlineTrackService = offlineTrackService;
+        this.offlinePlaylistService = offlinePlaylistService;
     }
 
     /*I don't even need this controller, and spring
@@ -61,41 +62,58 @@ boot will by default will render the "index" page*/
 
     @GetMapping("/toptracks")
     public String showTopTracks(@RequestParam(value = "artist", required = false) String artistName, Model model) throws Exception {
-        if(artistName == null) {
+        model.addAttribute("playlist", new Playlist());
+        model.addAttribute("playlists", offlinePlaylistService.getAllPlaylist());
+        model.addAttribute("artist", artistName);
+        if (artistName == null) {
             model.addAttribute("top_tracks", trackService.getTopTracks());
-            model.addAttribute("artist", null);
         } else {
             System.out.println(artistName);
             model.addAttribute("top_tracks", artistService.getTopTracks(artistName));
-            model.addAttribute("artist", artistName);
         }
         return "tracks";
     }
 
     @GetMapping("/saveTrack")
-    public String saveTrack(@RequestParam("track") String trackName, @RequestParam("artist") String artistName){
-        Track track = new Track(trackName, artistName);
-        offlineService.saveTrack(track);
+    public String saveTrack(@RequestParam("track") String trackName, @RequestParam("artist") String artistName, @RequestParam(value = "list") String playlist) {
+        Playlist playlist1 = new Playlist(playlist);
+        Track track = new Track(trackName, artistName, playlist);
+        offlineTrackService.saveTrack(track);
         return "redirect:/";
     }
 
     @GetMapping("/playlist")
     public String playlistContent(@RequestParam(value = "list", required = false) String playlist, Model model){
         if (playlist != null) {
-            List<Track> tracks = offlineService.getAllTracks();
+            System.out.println("When params");
+            List<Track> tracks = offlineTrackService.getAllTracksFromPlaylist(playlist);
             model.addAttribute("tracks", tracks);
             model.addAttribute("list", playlist);
             return "playlistcontent";
         } else {
-            List<String> playlists = offlineService.getPlaylists();
+            System.out.println("When not params");
+            List<Playlist> playlists = offlinePlaylistService.getAllPlaylist();
             model.addAttribute("playlists", playlists);
+            model.addAttribute("add_playlist", new Playlist());
             return "playlist";
         }
     }
 
+    @PostMapping("/playlist/add")
+    public String addPlaylist(@ModelAttribute("new_playlist") Playlist playlist){
+        offlinePlaylistService.addPlaylist(playlist);
+        return "redirect:/playlist";
+    }
+
+    @GetMapping("/playlist/delete")
+    public String deletePlaylist(@RequestParam("list_id") int listId){
+        offlinePlaylistService.deletePlaylist(listId);
+        return "redirect:/playlist";
+    }
+
     @GetMapping("/playlist/delete")
     public String deleteTrack(@RequestParam("list") String playlist, @RequestParam("id") int trackId){
-        offlineService.deleteTrack(trackId);
+        offlineTrackService.deleteTrack(trackId);
         return "redirect:/playlist?list=" + playlist;
     }
 

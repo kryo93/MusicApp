@@ -1,6 +1,5 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
 </head>
 
 <body>
@@ -10,14 +9,24 @@
     <tr>
         <th>Artist</th>
         <th>Track</th>
-        <th>Action</th>
+        <th>Save To</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="track : ${top_tracks}">
         <td><span th:text="${track.artistName}">Artist Name</span></td>
         <td><span th:text="${track.trackName}">Track Name</span></td>
-        <td><a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, playlist=${track.playlist})}">Save</a></td>
+        <td th:each="playlist:${playlists}" >
+<!--            <select name="selected_playlist" id="selected_playlist">-->
+<!--                <option value="null" disabled="disabled" selected="selected">Select Playlist</option>-->
+<!--                <option th:each="playlist: ${playlists}" th:value="${playlist.playlistName}"-->
+<!--                        th:text="${playlist.playlistName}">-->
+<!--                    options-->
+<!--                </option>-->
+<!--            </select>-->
+            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list=${playlist.playlistName})}"
+               th:text="${playlist.playlistName}">Save</a>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -37,7 +46,7 @@
         <td><span th:text="'empty...'">empty...</span></td>
         <td><span th:text="'empty...'">empty...</span></td>
         <td><span th:text="'empty...'">empty...</span></td>
-        <td><a th:href="@{/}" th:text="nothing to do...">nothing to do...</a> </td>
+        <td><a th:href="@{/}" th:text="nothing to do...">nothing to do...</a></td>
     </tr>
     <tr th:if="${top_tracks.empty}">
         <td colspan="4" th:text="'No Music Found for ' + ${artist}"></td>
@@ -46,7 +55,9 @@
         <td><span th:text="${track.trackName}">Track Name</span></td>
         <td><span th:text="${track.playCount}">PlayCount</span></td>
         <td><span th:text="${track.listeners}">Listeners</span></td>
-        <td><a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, playlist=${track.playlist})}">Save</a></td>
+        <td th:each="playlist:${playlists}" >
+            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list=${playlist.playlistName})}"
+               th:text="${playlist.playlistName}">Save</a></td>
     </tr>
     </tbody>
 </table>

@@ -1,9 +1,27 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
+    <script>
+        function showForm() {
+          var x = document.getElementById("formDIV");
+          if (x.style.display === "none") {
+            x.style.display = "block";
+          } else {
+            x.style.display = "none";
+          }
+        }
+    </script>
 </head>
 
 <body>
+<button onclick="showForm()">Add Playlist</button>
+<div id="formDIV" style="display:none;">
+    <form action="#" th:action="@{/playlist/add}" th:object="${add_playlist}" method="post">
+        <input type="text" th:field="*{playlistName}" placeholder="Playlist Name"/>
+        <input type="submit" value="Add">
+        <input type="reset" value="Reset">
+    </form>
+</div>
+
 <table>
     <thead>
     <tr>
@@ -13,7 +31,7 @@
     <tbody>
     <tr th:each="playlist : ${playlists}">
         <td>
-            <a th:href="@{/playlist(list=${playlist})}" th:text="${playlist}"></a>
+            <a th:href="@{/playlist(list=${playlist.playlistName})}" th:text="${playlist.playlistName}"></a>
         </td>
     </tr>
     </tbody>

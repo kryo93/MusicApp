@@ -11,7 +11,7 @@ public class Track {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "track_id")
-    private int id;
+    private int track_id;
 
     @Column(name = "track_name")
     private String trackName;
@@ -37,6 +37,12 @@ public class Track {
         this.artistName = artistName;
     }
 
+    public Track(String trackName, String artistName, String playlist) {
+        this.trackName = trackName;
+        this.artistName = artistName;
+        this.playlist = playlist;
+    }
+
     public Track(String trackName, String artistName, Long playCount, Long listeners) {
         this.trackName = trackName;
         this.artistName = artistName;
@@ -44,17 +50,11 @@ public class Track {
         this.listeners = listeners;
     }
 
+
     public String getTrackName() {
         return trackName;
     }
 
-    public String getPlaylist() {
-        return playlist;
-    }
-
-    public void setPlaylist(String playlist) {
-        this.playlist = playlist;
-    }
 
     public void setTrackName(String trackName) {
         this.trackName = trackName;
@@ -84,12 +84,12 @@ public class Track {
         this.listeners = listeners;
     }
 
-    public int getId() {
-        return id;
+    public int getTrack_id() {
+        return track_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTrack_id(int track_id) {
+        this.track_id = track_id;
     }
 
     @Override
@@ -98,5 +98,13 @@ public class Track {
                 "trackName='" + trackName + '\'' +
                 ", artistName='" + artistName + '\'' +
                 '}';
+    }
+
+    public String getPlaylist() {
+        return playlist;
+    }
+
+    public void setPlaylist(String playlist) {
+        this.playlist = playlist;
     }
 }

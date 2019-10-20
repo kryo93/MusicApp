@@ -10,6 +10,7 @@
     <tr>
         <th>Artist</th>
         <th>Music</th>
+        <th>Playlist</th>
         <th>Action</th>
     </tr>
     </thead>
@@ -17,11 +18,14 @@
     <tr th:each="track : ${tracks}">
         <td th:text="${track.artistName}"></td>
         <td th:text="${track.trackName}"></td>
+        <td th:text="${track.playlist}"></td>
         <td>
-            <a th:href="@{/playlist/delete(id=${track.id}, list=${list})}">remove</a>
+            <a th:href="@{/playlist/delete(id=${track.track_id}, list=${list})}">remove</a>
         </td>
     </tr>
     </tbody>
 </table>
+
+<a th:href=""
 </body>
 </html>
