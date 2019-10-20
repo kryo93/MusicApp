@@ -23,6 +23,10 @@ public class TrackService {
         return trackRepository.getTopTracks();
     }
 
+    public List<Track> searchTrack(String searchQuery, int pageNumber, int pageLimit) throws IOException, JSONException {
+        return trackRepository.searchResult(searchQuery, pageNumber, pageLimit);
+    }
+
 //    public List<Track> searchTrack(String searchQuery) {
 //    }
 }

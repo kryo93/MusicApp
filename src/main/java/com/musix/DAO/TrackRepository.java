@@ -68,4 +68,33 @@ public class TrackRepository {
         return trackList;
     }
 
+    public List<Track> searchResult(String searchQuery, int pageNumber, int pageLimit) throws IOException, JSONException {
+        String method = "track.search&track=" + searchQuery + "&page=" + pageNumber + "&limit=" + pageLimit;
+        HttpURLConnection connection = getConnection(method, "GET");
+        String response = getJSONString(connection);
+
+        JSONObject result = new JSONObject(response);
+        JSONObject search_results = result.getJSONObject("results");
+        String totalResults = search_results.getString("opensearch:totalResults");
+        System.out.println(totalResults);
+        List<Track> trackList = new ArrayList<>();
+
+        if (Integer.parseInt(totalResults) == 0) {
+            return trackList;
+        } else {
+            JSONObject trackMatches = search_results.getJSONObject("trackmatches");
+            JSONArray trackArray = trackMatches.getJSONArray("track");
+            for (int i = 0; i < trackArray.length(); i++) {
+                JSONObject eachTrack = trackArray.getJSONObject(i);
+                String trackName = eachTrack.getString("name");
+                String artistName = eachTrack.getString("artist");
+                Long listeners = Long.parseLong(eachTrack.getString("listeners"));
+                trackList.add(new Track(trackName, artistName, listeners));
+            }
+            return trackList;
+        }
+
+
+
+    }
 }

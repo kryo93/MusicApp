@@ -16,20 +16,8 @@
     <hr>
 </div>
 
-<table th:if="${search_query} == 'all'">
-    <thead>
-    <tr>
-        <th>Artist Name</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="artist : ${top_artist}">
-        <td><a th:href="@{/toptracks(artist=${artist.artistName})}" th:text="${artist.artistName}">Artist Name</a></td>
-    </tr>
-    </tbody>
-</table>
 
-<div th:if="${search_query != 'all'}">
+<div th:if="${search_tag == 'artist'}">
     <table>
         <thead>
         <tr>
@@ -54,6 +42,10 @@
         <p th:text="${current_page}" style="margin:0;padding:0;display:inline;"></p>
         <a th:href="@{/search(search_query=${search_query}, page_number=${current_page} + 1)}">next</a>
     </div>
+</div>
+
+<div th:if="${search_tag == 'track'}">
+
 
 </div>
 </body>

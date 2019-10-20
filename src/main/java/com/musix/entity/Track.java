@@ -43,6 +43,12 @@ public class Track {
         this.playlist = playlist;
     }
 
+    public Track(String trackName, String artistName, Long listeners) {
+        this.trackName = trackName;
+        this.artistName = artistName;
+        this.listeners = listeners;
+    }
+
     public Track(String trackName, String artistName, Long playCount, Long listeners) {
         this.trackName = trackName;
         this.artistName = artistName;

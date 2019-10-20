@@ -42,20 +42,32 @@ boot will by default will render the "index" page*/
         return "index";
     }
 
-    @GetMapping("/search")
-    public String search(@RequestParam("search_query") String searchQuery, @RequestParam("page_number") int pageNumber, Model model) throws IOException, JSONException {
+    @GetMapping("/searchArtist")
+    public String searchArtist(@RequestParam("search_query") String searchQuery, @RequestParam("page_number") int pageNumber, Model model) throws IOException, JSONException {
         List<Artist> resultArtist = artistService.searchArtist(searchQuery, pageNumber, 10);
 
+        model.addAttribute("search_tag", "artist");
         model.addAttribute("search_query", searchQuery);
         model.addAttribute("current_page", pageNumber);
         model.addAttribute("artist_search_result", resultArtist);
 
-        return "artist";
+        return "search";
+    }
+
+    @GetMapping("/searchTrack")
+    public String searchTrack(@RequestParam("search_query") String searchQuery, @RequestParam("page_number") int pageNumber, Model model)  throws IOException, JSONException  {
+        List<Track> resultTrack = trackService.searchTrack(searchQuery, pageNumber, 10);
+        model.addAttribute("playlists", offlinePlaylistService.getAllPlaylist());
+        model.addAttribute("search_tag", "track");
+        model.addAttribute("search_query", searchQuery);
+        model.addAttribute("current_page", pageNumber);
+        model.addAttribute("track_search_result", resultTrack);
+
+        return "search";
     }
 
     @GetMapping("/topartists")
     public String showTopTracksForArtist(Model model) throws IOException, JSONException {
-        model.addAttribute("search_query", "all");
         model.addAttribute("top_artist", artistService.getTopArtists());
         return "artist";
     }
@@ -78,7 +90,7 @@ boot will by default will render the "index" page*/
         String playlist_name = offlinePlaylistService.getPlaylistById(listId).get().getPlaylistName();
         Track track = new Track(trackName, artistName, playlist_name);
         offlineTrackService.saveTrack(track);
-        return "redirect:/";
+        return "redirect:/playlist?list=" + listId;
     }
 
     @GetMapping("/playlist")

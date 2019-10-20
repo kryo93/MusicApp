@@ -28,7 +28,6 @@ public class ArtistRepository {
 
     public HttpURLConnection getConnection(String method, String requestType) throws IOException {
         String urlString = String.format("%s?method=%s&api_key=%s&format=%s", base_url, method, api_key, format);
-        System.out.println(urlString);
         URL url = new URL(urlString);
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(requestType);
@@ -69,15 +68,14 @@ public class ArtistRepository {
         return artistList;
     }
 
-    public List<Artist> searchResult(String searchQuery, int pageNumber, int limit) throws IOException, JSONException {
-        String method = "artist.search&artist=" + searchQuery + "&page=" + pageNumber + "&limit=" + limit;
+    public List<Artist> searchResult(String searchQuery, int pageNumber, int pageLimit) throws IOException, JSONException {
+        String method = "artist.search&artist=" + searchQuery + "&page=" + pageNumber + "&limit=" + pageLimit;
         HttpURLConnection connection = getConnection(method, "GET");
         String response = getJSONString(connection);
 
         JSONObject result = new JSONObject(response);
         JSONObject search_results = result.getJSONObject("results");
         String totalResults = search_results.getString("opensearch:totalResults");
-        System.out.println(totalResults);
         List<Artist> artistList = new ArrayList<>();
 
         if (Integer.parseInt(totalResults) == 0) {
