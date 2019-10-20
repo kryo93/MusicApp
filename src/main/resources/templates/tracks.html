@@ -24,7 +24,7 @@
 <!--                    options-->
 <!--                </option>-->
 <!--            </select>-->
-            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list=${playlist.playlistName})}"
+            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list_id=${playlist.playlist_id})}"
                th:text="${playlist.playlistName}">Save</a>
         </td>
     </tr>
@@ -56,7 +56,7 @@
         <td><span th:text="${track.playCount}">PlayCount</span></td>
         <td><span th:text="${track.listeners}">Listeners</span></td>
         <td th:each="playlist:${playlists}" >
-            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list=${playlist.playlistName})}"
+            <a th:href="@{/saveTrack(track=${track.trackName}, artist=${track.artistName}, list_id=${playlist.playlist_id})}"
                th:text="${playlist.playlistName}">Save</a></td>
     </tr>
     </tbody>

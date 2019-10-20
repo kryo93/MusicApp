@@ -75,21 +75,22 @@ boot will by default will render the "index" page*/
     }
 
     @GetMapping("/saveTrack")
-    public String saveTrack(@RequestParam("track") String trackName, @RequestParam("artist") String artistName, @RequestParam(value = "list") String playlist) {
-        Playlist playlist1 = new Playlist(playlist);
-        Track track = new Track(trackName, artistName, playlist);
+    public String saveTrack(@RequestParam("track") String trackName, @RequestParam("artist") String artistName, @RequestParam(value = "list_id") Integer listId) {
+        String playlist_name = offlinePlaylistService.getPlaylistById(listId).get().getPlaylistName();
+        Track track = new Track(trackName, artistName, playlist_name);
         offlineTrackService.saveTrack(track);
         return "redirect:/";
     }
 
     @GetMapping("/playlist")
-    public String playlistContent(@RequestParam(value = "list", required = false) String playlist, Model model){
-        if (playlist != null) {
+    public String playlistContent(@RequestParam(value = "list", required = false) Integer list_id, Model model){
+        if (list_id != null) {
             System.out.println("When params");
-            List<Track> tracks = offlineTrackService.getAllTracksFromPlaylist(playlist);
+            List<Track> tracks = offlineTrackService.getAllTracksFromPlaylist(list_id);
             model.addAttribute("tracks", tracks);
-            model.addAttribute("list", playlist);
-            model.addAttribute("update_playlist", offlinePlaylistService.getPlaylistByName(playlist));            return "playlistcontent";
+            model.addAttribute("list", list_id);
+            model.addAttribute("update_playlist", offlinePlaylistService.getPlaylistById(list_id));
+            return "playlistcontent";
         } else {
             System.out.println("When not params");
             List<Playlist> playlists = offlinePlaylistService.getAllPlaylist();
@@ -100,15 +101,15 @@ boot will by default will render the "index" page*/
     }
 
     @PostMapping("/playlist/add")
-    public String addPlaylist(@ModelAttribute("new_playlist") Playlist playlist){
+    public String addPlaylist(@ModelAttribute("add_playlist") Playlist playlist){
         offlinePlaylistService.savePlaylist(playlist);
         return "redirect:/playlist";
     }
 
     @GetMapping("/playlist/deleteplaylist")
-    public String deletePlaylist(@RequestParam("list") String playlistName){
-        offlinePlaylistService.deletePlaylist(playlistName);
-        offlineTrackService.deleteTrackofPlaylist(playlistName);
+    public String deletePlaylist(@RequestParam("list_id") Integer listId){
+        offlineTrackService.deleteAllTrackofPlaylist(listId);
+        offlinePlaylistService.deletePlaylist(listId);
         /*If only I had many to many relationship between playlist and tracks, then the second call
         * wouldn't have to be made. And I wouldn't have to populate my database with duplicate tracks
         * in which belongs to different playlist. If Only! Goddamn it! I must do it!!!!!!*/
@@ -119,13 +120,14 @@ boot will by default will render the "index" page*/
     @PostMapping("/playlist/updateplaylist")
     public String updatePlaylist(@ModelAttribute("playlist") Playlist playlist){
         offlinePlaylistService.savePlaylist(playlist);
-        return "redirect:/playlist?list=" ;
+        return "redirect:/playlist" ;
     }
 
-    @GetMapping("/playlist/delete")
-    public String deleteTrack(@RequestParam("list") String playlist, @RequestParam("id") int trackId){
-        offlineTrackService.deleteTrack(trackId);
-        return "redirect:/playlist?list=" + playlist;
+
+    @GetMapping("/playlist/deletetrack")
+    public String deleteTrack(@RequestParam("track_id") int trackId, @RequestParam("list_id") Integer listId){
+        offlineTrackService.deleteTrackOfPlaylist(trackId, listId);
+        return "redirect:/playlist?list=" + trackId;
     }
 
 
@@ -135,3 +137,5 @@ boot will by default will render the "index" page*/
 
 // LESSON LEARNED, NEVER PLAY AROUND WITH ENTITES THAT YOU MAKE VISIBLE TO THE END USER FOR CRUD OPERATIONS! IN THE BACKED;
 // need to refactor using id from playlist to ease navigation when updating the name of the playlist
+
+// long story short, always use Primary KEY.

@@ -9,7 +9,7 @@ public class Playlist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "playlist_id")
-    private int playlist_id;
+    private Integer playlist_id;
 
     @Column(name = "playlist_name")
     private String playlistName;
@@ -29,11 +29,11 @@ public class Playlist {
         this.playlistName = playlistName;
     }
 
-    public int getPlaylist_id() {
+    public Integer getPlaylist_id() {
         return playlist_id;
     }
 
-    public void setPlaylist_id(int playlist_id) {
+    public void setPlaylist_id(Integer playlist_id) {
         this.playlist_id = playlist_id;
     }
 

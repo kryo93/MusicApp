@@ -10,8 +10,9 @@
     <input type="text" th:field="*{playlistName}"/>
     <input type="submit" value="Update">
 </form>
+<a th:href="@{/playlist/deleteplaylist(list_id=${list})}">delete</a> <!--Delete the whole playlist-->
 
-<a th:href="@{/playlist/deleteplaylist(list=${list})}">delete</a>
+
 <h5 th:if="${tracks.empty}" th:text="'Poof! It\'s empty'"></h5>
 <table th:if="${not tracks.empty}">
     <thead>
@@ -20,7 +21,7 @@
         <th>Music</th>
         <th>Playlist</th>
         <th>Action</th>
-    </tr>/
+    </tr>
     </thead>
     <tbody>
     <tr th:each="track : ${tracks}">
@@ -28,7 +29,8 @@
         <td th:text="${track.trackName}"></td>
         <td th:text="${track.playlist}"></td>
         <td>
-            <a th:href="@{/playlist/delete(id=${track.track_id}, list=${list})}">remove</a>
+            <!--Delete a track in playlist-->
+            <a th:href="@{/playlist/deletetrack(track_id=${track.track_id}, list_id=${list})}">remove</a>
         </td>
     </tr>
     </tbody>

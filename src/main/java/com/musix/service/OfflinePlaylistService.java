@@ -22,10 +22,10 @@ public class OfflinePlaylistService {
         return playlist;
     }
 
-    public Optional<Playlist> deletePlaylist(String playlist_name) {
-        Optional<Playlist> playlist = offlinePlaylistRepository.findOfName(playlist_name);
-        offlinePlaylistRepository.deleteOfName(playlist_name);
-        return playlist;
+    public Playlist deletePlaylist(Integer list_id) {
+        Optional<Playlist> playlist = offlinePlaylistRepository.findById(list_id);
+        offlinePlaylistRepository.deleteById(list_id);
+        return playlist.get();
     }
 
     public List<Playlist> getAllPlaylist() {
@@ -34,6 +34,11 @@ public class OfflinePlaylistService {
 
     public Object getPlaylistByName(String playlist) {
         return offlinePlaylistRepository.findOfName(playlist);
+    }
+
+    public Optional<Playlist> getPlaylistById(Integer list_id) {
+        System.out.println("I'm looking for playlist by id");
+        return offlinePlaylistRepository.findById(list_id);
     }
 
 //    public List<Track> getAllTracks(int playlist_id){

@@ -20,6 +20,11 @@ public interface OfflineTrackRespository extends JpaRepository<Track, Integer> {
     @Query("delete from Track tr where tr.playlist=:playlist")
     void deleteAllTrackFromPlaylist(@Param("playlist") String playlist);
 
+    @Transactional
+    @Modifying
+    @Query("delete from Track tr where tr.playlist=:playlist and tr.track_id=:id")
+    void deleteTrackOfPlaylist( @Param("playlist")String playlist_name, @Param("id") int track_id);
+
 //    @Query("SELECT DISTINCT track.playlist FROM Track track")
 //    List<String> getDistinctPlaylist();
 }
