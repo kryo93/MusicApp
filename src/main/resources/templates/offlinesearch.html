@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Musix - A music app without music</title>
+</head>
+<body>
+<a href="/" style="text-decoration:none">Home</a>|
+<a href="/playlist" style="text-decoration:none">Playlists</a>           <!--Show all playlist-->
+<div>
+    <p th:if="${search_result.empty}">Found Nothing</p>
+    <table th:if="${not search_result.empty}">
+        <thead>
+        <tr>
+            <th>Artist</th>
+            <th>Track</th>
+            <th>Playlist</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="track : ${search_result}">
+            <td><span th:text="${track.artistName}">Artist Name</span></td>
+            <td><span th:text="${track.trackName}">Track Name</span></td>
+            <td><span th:text="${track.playlist}">Playlist Name</span></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

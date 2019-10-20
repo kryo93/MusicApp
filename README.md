@@ -15,6 +15,8 @@ What Can You Do ?
     Search For Artists/Songs
     Manage Your Playlists(and later cry when you realize it was all in-memory)
     Add Any Song to Any of Your Playlist
+    Crud Around With Your Playlists
+    Search For Offline Tracks (brute approach though) 
 
 What Can't You Do ?
 

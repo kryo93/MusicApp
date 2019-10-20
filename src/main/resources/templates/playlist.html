@@ -1,4 +1,4 @@
-<html xmlns:th="http://www.thymeleaf.org">
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
 <head>
     <title>Musix - A music app without music</title>
     <script src="js/search.js"></script>
@@ -7,15 +7,10 @@
 
 <body>
 <div style="display:inline">
-    <a href="/" style="text-decoration:none">Home</a>|
-    <a href="/toptracks" style="text-decoration:none">Top Tracks</a>|
-    <a href="/topartists" style="text-decoration:none">Top Artists</a>|
-    <a href="/playlist" style="text-decoration:none">Playlists</a>
-    <form action="#" id="searchForm" method="GET">
-        <input type="text" id="searchQuery" name="search_query" required>
-        <input type="hidden" value="1" name="page_number">
-        <input type="button" value="Search Artist" onclick="searchArtist()">
-        <input type="button" value="Search Track" onclick="searchTrack()">
+    <a href="/" style="text-decoration:none">Home</a>
+    <form action="/searchOffline" id="searchForm" method="GET">
+        <input type="text" id="searchQuery" name="search_query" required="required"/>
+        <input type="submit" value="Search Offline"/>
     </form>
     <hr>
 </div>
